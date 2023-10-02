@@ -32,4 +32,8 @@ public class Book {
     @Size(max = 3000, message = "Год должен быть корректным")
     @Column(name = "year")
     private int year;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User owner;
 }

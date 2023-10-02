@@ -27,6 +27,7 @@ public class UserAction {
 
     @Column(name = "date_actions")
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateActions;
 
     @Column(name = "descriptions")
