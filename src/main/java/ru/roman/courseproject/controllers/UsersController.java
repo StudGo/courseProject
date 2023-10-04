@@ -1,6 +1,5 @@
 package ru.roman.courseproject.controllers;
 
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +28,7 @@ public class UsersController {
 
     @GetMapping()
     public String index(Model model){
-        model.addAttribute("user", usersService.findAll());
+        model.addAttribute("users", usersService.findAll());
         return "users/index";
     }
 
@@ -53,7 +52,7 @@ public class UsersController {
             return "users/edit";
 
         usersService.update(id, user);
-        return "redirect:/people";
+        return "redirect:/users";
     }
 
     @GetMapping("/new")
