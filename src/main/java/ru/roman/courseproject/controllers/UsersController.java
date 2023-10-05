@@ -7,8 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.roman.courseproject.models.User;
 import ru.roman.courseproject.service.BooksService;
+import ru.roman.courseproject.service.UserActionsService;
 import ru.roman.courseproject.service.UsersService;
-import ru.roman.courseproject.util.UserValidator;
 import org.springframework.ui.Model;
 
 @Controller
@@ -16,24 +16,27 @@ import org.springframework.ui.Model;
 public class UsersController {
 
     private final UsersService usersService;
-    private final UserValidator userValidator;
     private final BooksService booksService;
 
+    private final UserActionsService userActionsService;
+
     @Autowired
-    public UsersController(UsersService usersService, UserValidator userValidator, BooksService booksService) {
+    public UsersController(UsersService usersService, BooksService booksService, UserActionsService userActionsService) {
         this.usersService = usersService;
-        this.userValidator = userValidator;
         this.booksService = booksService;
+        this.userActionsService = userActionsService;
     }
 
     @GetMapping()
     public String index(Model model){
+        userActionsService.writeLog("Переход на сылку /users");
         model.addAttribute("users", usersService.findAll());
         return "users/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
+        userActionsService.writeLog("Переход на сылку /users/" + id);
         model.addAttribute("user", usersService.findOne(id));
         model.addAttribute("books", usersService.getBooksByUserId(id));
         return "users/show";
@@ -41,6 +44,7 @@ public class UsersController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){
+        userActionsService.writeLog("Переход на сылку /users/" + id + "/edit");
         model.addAttribute("user", usersService.findOne(id));
         return "users/edit";
     }
@@ -56,13 +60,14 @@ public class UsersController {
             return "users/edit";
         }
 
-
+        userActionsService.writeLog("Изменение пользователя с id=" + id);
         usersService.update(id, user);
         return "redirect:/users/" + id;
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
+        userActionsService.writeLog("Удаление пользователя с id=" + id);
         usersService.delete(id);
         return "redirect:/users";
     }

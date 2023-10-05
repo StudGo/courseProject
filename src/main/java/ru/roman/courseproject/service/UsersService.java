@@ -39,9 +39,13 @@ public class UsersService {
 
     @Transactional
     public void update(int id, User updatedUser){
-        updatedUser.setId(id);
+        User userToBeUpdated = usersRepository.findById(id).get();
 
-        usersRepository.save(updatedUser);
+        userToBeUpdated.setUsername(updatedUser.getUsername());
+        userToBeUpdated.setFullName(userToBeUpdated.getFullName());
+        userToBeUpdated.setEmail(userToBeUpdated.getEmail());
+
+        usersRepository.save(userToBeUpdated);
     }
 
     @Transactional
