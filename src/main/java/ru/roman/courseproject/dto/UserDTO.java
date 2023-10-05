@@ -17,6 +17,13 @@ public class UserDTO {
     @NotEmpty(message = "Username should not be empty")
     private String username;
 
+    @NotEmpty(message = "Email should not be empty")
+    @Email
+    private String email;
+
+    @NotEmpty(message = "Your name should not be empty")
+    private String fullName;
+
     @NotEmpty(message = "Password should not be empty")
     private String password;
 }

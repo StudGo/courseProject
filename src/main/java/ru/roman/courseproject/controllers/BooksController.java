@@ -3,7 +3,6 @@ package ru.roman.courseproject.controllers;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +44,7 @@ public class BooksController {
         if(bookOwner != null)
             model.addAttribute("owner", bookOwner);
         else
-            model.addAttribute("user", usersService.findAll());
+            model.addAttribute("users", usersService.findAll());
 
         return "books/show";
     }
@@ -57,14 +56,14 @@ public class BooksController {
         return "books/edit";
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/{id}")
     public String update(@ModelAttribute("book") Book book, @PathVariable("id") int id,
                          BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return "books/edit";
 
         booksService.update(id, book);
-        return "redirect:/books";
+        return "redirect:/books/" + id;
     }
 
     @GetMapping("/new")
@@ -102,5 +101,14 @@ public class BooksController {
         return "redirect:/books/" + id;
     }
 
+    @GetMapping("/search")
+    public String search(){
+        return "books/search";
+    }
 
+    @PostMapping("/search")
+    public String doSearch(Model model, @RequestParam("query") String query){
+        model.addAttribute("books", booksService.searchByTitle(query));
+        return "books/search";
+    }
 }

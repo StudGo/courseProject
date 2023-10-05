@@ -21,14 +21,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/auth/registration/**", "/auth/login", "/error").permitAll()
-                .requestMatchers("/books").permitAll()
+                .requestMatchers("/auth/registration", "/auth/login").permitAll()
+                .requestMatchers("/books", "/").permitAll()
                 .requestMatchers("/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/auth/login")
                         .defaultSuccessUrl("/users")
+                        .successForwardUrl("/")
                         .failureUrl("/auth/login?error")
                         .permitAll())
                 .logout(logout -> logout

@@ -50,6 +50,10 @@ public class BooksService {
         booksRepository.save(updatedBook);
     }
 
+    public List<Book> searchByTitle(String query){
+        return booksRepository.findByTitleStartingWith(query);
+    }
+
     @Transactional
     public void delete(int id) {
         booksRepository.deleteById(id);

@@ -1,6 +1,8 @@
 package ru.roman.courseproject.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -29,11 +31,15 @@ public class Book {
     private String author;
 
     @NotNull
-    @Size(max = 3000, message = "Год должен быть корректным")
+    @Max(value = 3000, message = "Год должен быть корректным")
+    @Min(value = 1, message = "Год должен быть коррекстным")
     @Column(name = "year")
     private int year;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
+
+    @Transient
+    private boolean expired;
 }

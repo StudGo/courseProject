@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/books}">Student Management System</a>
+        <a class="navbar-brand" th:href="@{/}">Student Management System</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -58,6 +58,34 @@
                         />
                         <p th:errors="*{username}" class="text-danger"
                            th:if="${#fields.hasErrors('username')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="control-label"> Full name</label>
+                        <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                class="form-control"
+                                placeholder="Enter your name"
+                                th:field="*{fullName}"
+                        />
+                        <p th:errors="*{fullName}" class="text-danger"
+                           th:if="${#fields.hasErrors('fullName')}"></p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="control-label"> Email</label>
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter email"
+                                th:field="*{email}"
+                        />
+                        <p th:errors="*{email}" class="text-danger"
+                           th:if="${#fields.hasErrors('email')}"></p>
                     </div>
 
                     <div class="form-group mb-3">

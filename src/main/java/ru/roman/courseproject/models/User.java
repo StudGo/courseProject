@@ -1,6 +1,7 @@
 package ru.roman.courseproject.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -28,9 +28,19 @@ public class User {
     @Size(min = 2, max = 50, message = "Логин должен быть от 2 до 50 символов")
     private String username;
 
-    @NotNull
     @Column(name = "password")
     private String password;
+
+    @NotNull
+    @Column(name = "email")
+    @Size(min = 2, max = 100, message = "Email должен быть от 2 до 100 символов")
+    @Email(message = "Email задан не корректно")
+    private String email;
+
+    @NotNull
+    @Column(name = "full_name")
+    @Size(min = 2, max = 100, message = "Имя должен быть от 2 до 100 символов")
+    private String fullName;
 
     @OneToMany(mappedBy = "owner")
     private List<Book> books;

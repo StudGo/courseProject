@@ -19,15 +19,15 @@ public class UserRegValidator implements Validator {
     }
     @Override
     public boolean supports(Class<?> clazz) {
-        return true;
+        return UserDTO.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         UserDTO user = (UserDTO) target;
 
-        if(usersService.getUserByUsername(user.getUsername()).isPresent()){
-            errors.rejectValue("username", "", "Человек с таким никнеймом уже существует");
+        if(usersService.getUserByUsername(user.getEmail()).isPresent()){
+            errors.rejectValue("email", "", "Человек с таким email уже существует");
         }
     }
 }

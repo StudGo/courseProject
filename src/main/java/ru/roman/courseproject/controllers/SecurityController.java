@@ -13,7 +13,6 @@ import ru.roman.courseproject.dto.UserDTO;
 import ru.roman.courseproject.models.User;
 import ru.roman.courseproject.security.UserService;
 import ru.roman.courseproject.util.UserRegValidator;
-import ru.roman.courseproject.util.UserValidator;
 
 @Controller
 @RequestMapping("/auth")

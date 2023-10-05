@@ -45,31 +45,20 @@ public class UsersController {
         return "users/edit";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, @PathVariable("id") int id,
-                         BindingResult bindingResult){
-        if(bindingResult.hasErrors())
+    @PostMapping("/{id}")
+    public String update(@ModelAttribute("user") @Valid User user,
+                         @PathVariable("id") int id,
+                         BindingResult bindingResult,
+                         Model model){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("user", usersService.findOne(id));
             return "users/edit";
+        }
+
 
         usersService.update(id, user);
-        return "redirect:/users";
-    }
-
-    @GetMapping("/new")
-    public String newPerson(@ModelAttribute("user") User user){
-        return "users/new";
-    }
-
-    @PostMapping()
-    public String create(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult){
-        userValidator.validate(user, bindingResult);
-
-        if(bindingResult.hasErrors())
-            return "users/new";
-
-        usersService.save(user);
-        return "redirect:/users";
+        return "redirect:/users/" + id;
     }
 
     @DeleteMapping("/{id}")

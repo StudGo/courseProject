@@ -2,6 +2,7 @@ package ru.roman.courseproject.service;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.roman.courseproject.models.Book;
@@ -39,6 +40,7 @@ public class UsersService {
     @Transactional
     public void update(int id, User updatedUser){
         updatedUser.setId(id);
+
         usersRepository.save(updatedUser);
     }
 
