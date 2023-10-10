@@ -28,6 +28,7 @@ public class User {
     @Size(min = 2, max = 50, message = "Логин должен быть от 2 до 50 символов")
     private String username;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 

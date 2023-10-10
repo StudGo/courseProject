@@ -10,6 +10,7 @@ import ru.roman.courseproject.service.BooksService;
 import ru.roman.courseproject.service.UserActionsService;
 import ru.roman.courseproject.service.UsersService;
 import org.springframework.ui.Model;
+import ru.roman.courseproject.util.UserValidator;
 
 @Controller
 @RequestMapping("/users")
@@ -18,12 +19,15 @@ public class UsersController {
     private final UsersService usersService;
     private final BooksService booksService;
 
+    private final UserValidator userValidator;
+
     private final UserActionsService userActionsService;
 
     @Autowired
-    public UsersController(UsersService usersService, BooksService booksService, UserActionsService userActionsService) {
+    public UsersController(UsersService usersService, BooksService booksService, UserValidator userValidator, UserActionsService userActionsService) {
         this.usersService = usersService;
         this.booksService = booksService;
+        this.userValidator = userValidator;
         this.userActionsService = userActionsService;
     }
 
@@ -50,22 +54,22 @@ public class UsersController {
     }
 
     @PostMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user,
+    public String update(@ModelAttribute("user") User user,
                          @PathVariable("id") int id,
-                         BindingResult bindingResult,
-                         Model model){
+                         BindingResult bindingResult){
 
-        if(bindingResult.hasErrors()){
-            model.addAttribute("user", usersService.findOne(id));
+        userValidator.validate(user, bindingResult);
+
+        if(bindingResult.hasErrors())
             return "users/edit";
-        }
+
 
         userActionsService.writeLog("Изменение пользователя с id=" + id);
         usersService.update(id, user);
         return "redirect:/users/" + id;
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") int id){
         userActionsService.writeLog("Удаление пользователя с id=" + id);
         usersService.delete(id);

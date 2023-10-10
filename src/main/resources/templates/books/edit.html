@@ -43,10 +43,13 @@
     <form th:action="@{/books/{id}(id=${book.getId()})}" th:object="${book}" method="POST">
 
         <input type="text" th:field="*{title}" class="form-control col-4 mb-4" placeholder="Enter title"/>
+        <p th:errors="*{title}" class="text-danger" th:if="${#fields.hasErrors('title')}"></p>
 
         <input type="text" th:field="*{author}" class="form-control col-4 mb-4" placeholder="Enter author"/>
+        <p th:errors="*{author}" class="text-danger" th:if="${#fields.hasErrors('author')}"></p>
 
         <input type="text" th:field="*{year}" class="form-control col-4 mb-4" placeholder="Enter year"/>
+        <p th:errors="*{year}" class="text-danger" th:if="${#fields.hasErrors('year')}"></p>
 
         <button type="submit" class="btn btn-primary col-2">Save</button>
 

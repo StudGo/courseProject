@@ -43,10 +43,13 @@
     <form th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}" method="POST">
 
         <input type="text" th:field="*{username}" class="form-control col-4 mb-4" placeholder="Enter Username"/>
+        <p th:errors="*{username}" class="text-danger" th:if="${#fields.hasErrors('username')}"></p>
 
         <input type="text" th:field="*{fullName}" class="form-control col-4 mb-4" placeholder="Enter Full name"/>
+        <p th:errors="*{fullName}" class="text-danger" th:if="${#fields.hasErrors('fullName')}"></p>
 
         <input type="text" th:field="*{email}" class="form-control col-4 mb-4" placeholder="Enter Email"/>
+        <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
 
         <button type="submit" class="btn btn-primary col-2">Save</button>
 

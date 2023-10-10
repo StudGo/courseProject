@@ -32,7 +32,7 @@ public class Book {
 
     @NotNull
     @Max(value = 3000, message = "Год должен быть корректным")
-    @Min(value = 1, message = "Год должен быть коррекстным")
+    @Min(value = 1, message = "Год должен быть корректным")
     @Column(name = "year")
     private int year;
 
@@ -40,6 +40,4 @@ public class Book {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
 
-    @Transient
-    private boolean expired;
 }

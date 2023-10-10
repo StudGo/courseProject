@@ -11,6 +11,7 @@ import ru.roman.courseproject.models.User;
 import ru.roman.courseproject.service.BooksService;
 import ru.roman.courseproject.service.UserActionsService;
 import ru.roman.courseproject.service.UsersService;
+import ru.roman.courseproject.util.BookValidator;
 
 @Controller
 @RequestMapping("/books")
@@ -18,12 +19,15 @@ public class BooksController {
     private final BooksService booksService;
     private final UsersService usersService;
 
+    private final BookValidator bookValidator;
+
     private final UserActionsService userActionsService;
 
     @Autowired
-    public BooksController(BooksService booksService, UsersService usersService, UserActionsService userActionsService) {
+    public BooksController(BooksService booksService, UsersService usersService, BookValidator bookValidator, UserActionsService userActionsService) {
         this.booksService = booksService;
         this.usersService = usersService;
+        this.bookValidator = bookValidator;
         this.userActionsService = userActionsService;
     }
 
@@ -68,6 +72,8 @@ public class BooksController {
     @PostMapping("/{id}")
     public String update(@ModelAttribute("book") Book book, @PathVariable("id") int id,
                          BindingResult bindingResult){
+        bookValidator.validate(book, bindingResult);
+
         if(bindingResult.hasErrors())
             return "books/edit";
 
@@ -94,21 +100,21 @@ public class BooksController {
         return "redirect:/books";
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") int id){
         userActionsService.writeLog("Удаление книги с id=" + id);
         booksService.delete(id);
         return "redirect:/books";
     }
 
-    @PatchMapping("/{id}/release")
+    @PostMapping("/{id}/release")
     public String release(@PathVariable("id") int id){
         userActionsService.writeLog("Освобождение книги");
         booksService.release(id);
         return "redirect:/books/" + id;
     }
 
-    @PatchMapping("/{id}/assign")
+    @PostMapping("/{id}/assign")
     public String assign(@PathVariable("id") int id,
                          @ModelAttribute("user") User user){
         userActionsService.writeLog("Занятие книги");
