@@ -55,10 +55,11 @@
     </div>
 
     <div th:each="book : ${books}">
-        <p th:text="${book.getTitle() + ', ' + book.getYear()}">book</p>
+        <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle() + ', ' + book.getYear()}">book</a>
 
         <div th:if="${book.getOwner() != null}">
-            <span>Книга сейчас у: </span> <span th:text="${book.getOwner().getFullName()}">Person Name</span>
+            <span>Книга сейчас у: </span> <a th:href="@{/users/{id}(id=${book.getOwner().getId()})}"
+                                                th:text="${book.getOwner().getFullName()}">Person Name</a>
         </div>
 
         <div th:if="${book.getOwner() == null}">

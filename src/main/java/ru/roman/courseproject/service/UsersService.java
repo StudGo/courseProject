@@ -42,8 +42,8 @@ public class UsersService {
         User userToBeUpdated = usersRepository.findById(id).get();
 
         userToBeUpdated.setUsername(updatedUser.getUsername());
-        userToBeUpdated.setFullName(userToBeUpdated.getFullName());
-        userToBeUpdated.setEmail(userToBeUpdated.getEmail());
+        userToBeUpdated.setFullName(updatedUser.getFullName());
+        userToBeUpdated.setEmail(updatedUser.getEmail());
 
         usersRepository.save(userToBeUpdated);
     }

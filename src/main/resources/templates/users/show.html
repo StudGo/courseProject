@@ -63,10 +63,9 @@
         <table class="table table-bordered table-hover" th:each="book : ${books}">
             <tr>
                 <td>
-                <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}"
-                      th:style="${book.isExpired()} ? 'color: red' : 'color: black'">
+                <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">
                     book
-                </span>
+                </a>
                 </td>
             </tr>
         </table>

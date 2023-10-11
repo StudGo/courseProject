@@ -54,15 +54,15 @@
         </div>
         <div th:if="${owner}">
             <span>Книга сейчас у: </span>
-            <span th:text="${owner.getFullName()}"></span>
-            <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+            <a th:href="@{/users/{id}(id=${owner.getId()})}" th:text="${owner.getFullName()}"></a>
+            <form th:method="POST" th:action="@{/books/{id}/release(id=${book.getId()})}">
                 <input type="submit" value="Освободить книгу"/>
             </form>
         </div>
 
         <div th:if="${users}">
             <span>Эта книга свободна. Кому ее назначить?</span>
-            <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+            <form th:method="POST" th:action="@{/books/{id}/assign(id=${book.getId()})}">
                 <label for="user">Выберите человека</label>
                 <select th:object="${user}" th:field="*{id}" id="user">
                     <option th:each="user : ${users}" th:value="${user.getId()}" th:text="${user.getFullName()}"></option>
